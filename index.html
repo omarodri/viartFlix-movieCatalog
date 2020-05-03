@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>BlockBoster</title>
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+  <link rel="stylesheet" href="src/css/home.css" />
+  <link rel="stylesheet" href="src/css/modal.css" />
+</head>
+
+<body>
+  <section class="home" id="home">
+    <div class="home-sidebar">
+      <div class="sidebar">
+
+        <div class="sidebarPlaylist">
+          <h2 class="sidebarPlaylist-title"><span class="btn warning">TOP 10 Movies for share</span> </h2>
+          <ol class="myPlaylist">
+            <!-- Content from home.js -->
+          </ol>
+        </div>
+        <div class="sidebarPlaylist">
+          <h2 class="sidebarPlaylist-title">Member List</h2>
+          <ul class="playlistFriends">
+            <!-- Content from home.js -->
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+    <div class="home-primary">
+      <!-- <section class="primary"> -->
+      <div class="primary-logo">
+        <figure class="logo-image">
+          <img src="src/images/logo.png" alt="Movies Catalogue" />
+        </figure>
+      </div>
+
+      <div class="primary-search">
+        <form action="" class="search" id="form">
+          <input type="text" name="name" placeholder="Search a movie" />
+        </form>
+      </div>
+      <div class="primary-user">
+        <div class="user">
+          <p>
+            <img src="src/images/omar.jpg" alt="" />
+            <span>Omar Rodriguez</span>
+          </p>
+        </div>
+      </div>
+      <div class="main">
+        <figure class="main-picture">
+
+        </figure>
+      </div>
+      <div class="primary-list">
+
+        <div class="primaryPlaylist">
+          <h2 class="primaryPlaylist-title">More Popular</h2>
+          <div class="primaryPlaylist-list" id="popular">
+            <img id="loader" src="src/images/loader.gif" width="50" height="50" alt="">
+          </div>
+        </div>
+        <div class="primaryPlaylist">
+          <h2 class="primaryPlaylist-title">Action</h2>
+          <div class="primaryPlaylist-list" id="action">
+            <img id="loader" src="src/images/loader.gif" width="50" height="50" alt="">
+          </div>
+        </div>
+        <div class="primaryPlaylist">
+          <h2 class="primaryPlaylist-title">Animated</h2>
+          <div class="primaryPlaylist-list" id="animation">
+            <img src="src/images/loader.gif" width="50" height="50" alt="">
+          </div>
+        </div>
+        <div class="primaryPlaylist">
+          <h2 class="primaryPlaylist-title">Drama</h2>
+          <div class="primaryPlaylist-list" id="drama">
+            <img id="loader" src="src/images/loader.gif" width="50" height="50" alt="">
+          </div>
+        </div>
+      </div>
+      <!-- </section> -->
+    </div>
+    <div class="home-featuring" id="featuring">
+
+    </div>
+  </section>
+  <div class="overlay" id="overlay">
+  </div>
+  <div class="modal" id="modal">
+    <h1>Título de pelicula</h1>
+    <div class="modal-content">
+      <img src="" alt="" width="170" height="256">
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione impedit maiores enim alias ex accusantium
+        quasi cum autem, nam, voluptas tenetur laudantium quod! Odit voluptate illo, voluptas vel quia, quae.</p>
+    </div>
+    <div class="modal-buttons">
+      <button class="modal-btn primary" id="hide-modal">Close</button>
+      <a href="#" class="modal-btn secondary" id="download">Download Torrent</a>
+    </div>
+  </div>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="src/js/home.js"></script>
+</body>
+
+</html>

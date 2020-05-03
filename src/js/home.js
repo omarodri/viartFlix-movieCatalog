@@ -180,51 +180,19 @@
   // trabajo con EL formaulario de bûsqueda
   const $home = document.getElementById('home');
   const $form = document.getElementById('form');
-  const $featuringContainer = document.getElementById('featuring');
+  // const $featuringContainer = document.getElementById('featuring');
 
-  function featuringTemplate(movie) {
-    return `<div class="featuring">
-      <div class="featuring-image">
-        <img src="${movie.medium_cover_image}" width="70" height="100" alt="">
-      </div>
-      <div class="featuring-content">
-        <p class="featuring-title">Pelicula encontrada</p>
-        <p class="featuring-album">${movie.title}</p>
-      </div>
-    </div>`;
-  }
-
-  $form.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    $home.classList.add('search-active');
-
-    const $loader = document.createElement('img');
-    setAttributes($loader, {
-      src: 'src/images/loader.gif',
-      height: 50,
-      width: 50,
-    });
-
-    $featuringContainer.append($loader);
-
-    const buscar = new FormData($form);
-    try {
-      const {
-        data: { movies: peli },
-      } = await getDaticos(
-        `${URL_API_MOVIES}list_movies.json?limit=1&query_term=${buscar.get(
-          'name'
-        )}`
-      );
-      // debugger;
-      const featureMovie = featuringTemplate(peli[0]);
-      $featuringContainer.innerHTML = featureMovie;
-    } catch (error) {
-      alert(error);
-      $loader.remove();
-      $home.classList.remove('search-active');
-    }
-  });
+  // function featuringTemplate(movie) {
+  //   return `<div class="featuring">
+  //     <div class="featuring-image">
+  //       <img src="${movie.medium_cover_image}" width="70" height="100" alt="">
+  //     </div>
+  //     <div class="featuring-content">
+  //       <p class="featuring-title">Pelicula encontrada</p>
+  //       <p class="featuring-album">${movie.title}</p>
+  //     </div>
+  //   </div>`;
+  // }
 
   // elementos para el modal
   const $modal = document.getElementById('modal');
@@ -249,6 +217,8 @@
         return findMovieById(animationList, id);
       case 'drama':
         return findMovieById(dramaList, id);
+      case 'results':
+        return findMovieById(resultsList, id);
       default:
         return findMovieById(popularList, id);
     }
@@ -262,8 +232,13 @@
     const id = $element.dataset.id;
     const category = $element.dataset.category;
     const movieDetails = findMovie(id, category);
-    // debugger;
-    $modalDescription.textContent = movieDetails.summary;
+
+    let summary = movieDetails.summary;
+
+    if (summary.length > 500) {
+      summary = summary.substring(0, 500) + '...';
+    }
+    $modalDescription.textContent = summary;
     $modalTitle.textContent = movieDetails.title;
     $modalImage.setAttribute('src', movieDetails.medium_cover_image);
     $download.setAttribute('href', movieDetails.torrents[0].url);
@@ -287,6 +262,7 @@
   const $actionContainer = document.querySelector('#action');
   const $animationContainer = document.getElementById('animation');
   const $dramaContainer = document.getElementById('drama');
+  const $resultContainer = document.getElementById('results');
 
   //plantilla para los items de la lista de videos
   function movieItemTemplate(movie, category) {
@@ -393,4 +369,46 @@
 
   const dramaList = await chacheExist('drama');
   renderMovieList(dramaList, $dramaContainer, 'drama');
+
+  let resultsList = null;
+
+  $form.addEventListener('submit', async (event) => {
+    const buscar = new FormData($form);
+    event.preventDefault();
+    $home.classList.add('search-active');
+
+    const $loader = document.createElement('img');
+    setAttributes($loader, {
+      src: 'src/images/loader.gif',
+      height: 50,
+      width: 50,
+    });
+    const $resultTitle = document.getElementById('result-title');
+    $resultTitle.innerText = `Results for: ${buscar.get('name')}`;
+
+    // $featuringContainer.append($loader);
+    $resultContainer.append($loader);
+
+    try {
+      const {
+        data: { movies: results },
+      } = await getDaticos(
+        `${URL_API_MOVIES}list_movies.json?limit=20&sort_by=date&order_by=desc&query_term=${buscar.get(
+          'name'
+        )}`
+      );
+      resultsList = results;
+      // debugger;
+      // Versiôn 2
+      // const featureMovie = featuringTemplate(peli[0]);
+      renderMovieList(resultsList, $resultContainer, 'results');
+      // $resultContainer.innerHTML = featureMovie;
+    } catch (error) {
+      alert(error);
+      $loader.remove();
+      $resultTitle.innerText = `Sorry, No results for: ${buscar.get('name')}`;
+      $resultContainer.innerText = '';
+      $home.classList.remove('search-active');
+    }
+  });
 })();

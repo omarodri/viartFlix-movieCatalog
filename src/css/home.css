@@ -218,6 +218,7 @@ body {
   color: #b2b5b8;
   font-size: 1.6em;
   font-weight: 400;
+  text-transform: capitalize;
 }
 .primaryPlaylist-list {
   display: flex;
@@ -245,7 +246,13 @@ body {
   width: 170px;
   height: 256px;
   object-fit: cover;
+  border-radius: 5px;
 }
+/* .primaryPlaylistItem img:hover {
+  width: 180px;
+  height: 276px;
+} */
+
 .primaryPlaylistItem-title {
   margin: 5px 0;
   color: #ffffff;
